@@ -3,6 +3,8 @@ TestTimerScoped
 
 Utility class for quick code benchmarking. Header only, single line to use.
 
+This is a fork of https://github.com/catnapgames/TestTimerScoped, which works on OSX and Linux (the original has been developed for OSX and iOS). It likely works on Windows and iOS, too, but has not been tested on these platforms.
+
 ###Example:
 
 	#include "NLTimerScoped.h"
@@ -14,5 +16,3 @@ Utility class for quick code benchmarking. Header only, single line to use.
 	}
 
 Output will be ``sleep( 4 ) duration: 4000ms``
-
-Currently works on Mac OS X and iOS.
