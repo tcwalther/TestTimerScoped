@@ -1,6 +1,7 @@
-#pragma once
+#ifndef NLTIMERSCOPED_H
+#define NLTIMERSCOPED_H
 
-#include <mach/mach_time.h>
+#include <sys/time.h>
 #include <string>
 #include <iostream>
 
@@ -8,35 +9,31 @@
 
 class NLTimerScoped {
 private:
-    mach_timebase_info_data_t timebaseInfo;
-    uint64_t start;
+    double start;
     std::string name;
-    
+
 public:
     NLTimerScoped( const std::string & name ) : name( name ) {
-        mach_timebase_info(&timebaseInfo);
-        
         start = now();
     }
 
-    
+
     ~NLTimerScoped() {
-        auto end = now();
-        auto duration = ( end - start ) / 1000000;
-        
+        double end = now();
+        double duration = end - start;
+
         std::cout << name << " duration: " << duration << "ms" << std::endl;
     }
 
 
 private:
 
-    uint64_t now() const {
-        uint64_t now = mach_absolute_time();
-        
-        now *= timebaseInfo.numer;
-        now /= timebaseInfo.denom;
-        
-        return now;
+    double now() const {
+        struct timeval tm;
+        gettimeofday( &tm, NULL );
+        return (double)tm.tv_sec * 1000.0 + (double)tm.tv_usec / 1000.0;
     }
 
 };
+
+#endif
